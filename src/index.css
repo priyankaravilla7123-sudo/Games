@@ -1,0 +1,72 @@
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #392b3d;
+  background: #fffaf8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --plum: #4c3455;
+  --pink: #f3b8c9;
+  --pink-dark: #d77d9b;
+  --lavender: #ded5f6;
+  --cream: #fffaf5;
+  --muted: #837783;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #fffaf8;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #d77d9b;
+  outline-offset: 4px;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+::selection {
+  background: #f3d3df;
+  color: #392b3d;
+}

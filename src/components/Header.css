@@ -1,0 +1,161 @@
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background: rgba(255, 250, 248, 0.94);
+  border-bottom: 1px solid rgba(240, 223, 235, 0.8);
+  backdrop-filter: blur(16px);
+}
+
+/* Header layout */
+.header-inner {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 78px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Brand on the left */
+.brand {
+  grid-column: 1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: var(--plum);
+  cursor: pointer;
+}
+
+.brand-icon {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--pink-light);
+  color: var(--pink-dark);
+  font-size: 27px;
+}
+
+.brand-name {
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+}
+
+/* Navigation buttons centered */
+.navigation {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  white-space: nowrap;
+}
+
+.navigation a,
+.navigation button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.navigation a:hover,
+.navigation button:hover {
+  color: var(--pink-dark);
+  background: var(--pink-light);
+}
+
+/* Tablet screens */
+@media (max-width: 900px) {
+  .header-inner {
+    width: min(100% - 32px, 1180px);
+    gap: 12px;
+  }
+
+  .navigation {
+    gap: 8px;
+  }
+
+  .navigation a,
+  .navigation button {
+    padding: 8px 7px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 640px) {
+  .header-inner {
+    min-height: 70px;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+  }
+
+  .brand {
+    gap: 7px;
+  }
+
+  .brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 23px;
+  }
+
+  .brand-name {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+
+  .navigation {
+    grid-column: 2;
+    justify-self: end;
+    gap: 1px;
+  }
+
+  .navigation a,
+  .navigation button {
+    padding: 7px 5px;
+    font-size: 11px;
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 380px) {
+  .header-inner {
+    width: calc(100% - 20px);
+    gap: 4px;
+  }
+
+  .brand-name {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+
+  .brand-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+
+  .navigation a,
+  .navigation button {
+    padding: 6px 3px;
+    font-size: 10px;
+  }
+}
