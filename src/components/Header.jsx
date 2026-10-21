@@ -8,7 +8,7 @@ export default function Header({ onNavigate }) {
           onClick={() => onNavigate("home")}
         >
           <span className="brand-icon">♡</span>
-          <span className="brand-name">LIKYAO FUNS</span>
+          <span className="brand-name">LIKYAO PLAY</span>
         </button>
 
         <nav className="navigation">
