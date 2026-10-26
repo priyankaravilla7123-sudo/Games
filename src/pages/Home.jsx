@@ -6,8 +6,7 @@ const games = [
     decoration: "🎵",
     title: "Antakshari",
     subtitle: "Sing your heart out!",
-    description:
-      "Get your letter and sing a song that begins with it.",
+    description: "Get your letter and sing a song that begins with it.",
     tags: ["🎥 Tollywood", "🎬 Bollywood"],
     button: "Let's Sing",
     theme: "pink",
@@ -26,10 +25,7 @@ const games = [
   },
 ];
 
-export default function Home({
-  onPlayAntakshari,
-  onPlayCharades,
-}) {
+export default function Home({ onPlayAntakshari, onPlayCharades }) {
   const openGame = (gameId) => {
     if (gameId === "antakshari") {
       onPlayAntakshari();
@@ -58,8 +54,8 @@ export default function Home({
           </h1>
 
           <p className="hero-description">
-            A little singing, a little acting, and a whole lot
-            of laughter. Make every get-together a memory.
+            A little singing, a little acting, and a whole lot of laughter. Make
+            every get-together a memory.
           </p>
 
           <button
@@ -87,9 +83,7 @@ export default function Home({
           <div>
             <span className="eyebrow">THE FUN STARTS HERE ✨</span>
             <h2>What are we playing?</h2>
-            <p>
-              Pick a game, gather your gang, and let the fun begin.
-            </p>
+            <p>Pick a game, gather your gang, and let the fun begin.</p>
           </div>
 
           <span className="heading-doodle">♡</span>
@@ -97,17 +91,12 @@ export default function Home({
 
         <div className="games-grid">
           {games.map((game) => (
-            <article
-              className={`game-card ${game.theme}`}
-              key={game.id}
-            >
+            <article className={`game-card ${game.theme}`} key={game.id}>
               <div className="card-art">
                 <span className="card-sparkle sparkle-left">✦</span>
                 <span className="card-sparkle sparkle-right">✧</span>
 
-                <span className="card-decoration">
-                  {game.decoration}
-                </span>
+                <span className="card-decoration">{game.decoration}</span>
 
                 <div className="game-illustration">
                   <span>{game.emoji}</span>
@@ -119,15 +108,11 @@ export default function Home({
               </div>
 
               <div className="card-content">
-                <span className="card-kicker">
-                  {game.subtitle}
-                </span>
+                <span className="card-kicker">{game.subtitle}</span>
 
                 <h3>{game.title}</h3>
 
-                <p className="card-description">
-                  {game.description}
-                </p>
+                <p className="card-description">{game.description}</p>
 
                 <div className="game-tags">
                   {game.tags.map((tag) => (
@@ -151,8 +136,8 @@ export default function Home({
         <div className="coming-note">
           <span>💌</span>
           <p>
-            Gather, Play & Laugh — Make unforgettable memories
-            with your favourite people!
+            Gather, Play & Laugh — Make unforgettable memories with your
+            favourite people!
           </p>
           <span>💌</span>
         </div>
@@ -169,13 +154,9 @@ export default function Home({
           More happy time together
         </h2>
 
-        <p>
-          Likyao is all about connecting people through play.
-        </p>
+        <p>Likyao is all about connecting people through play.</p>
 
-        <div className="about-emojis">
-          🎶 &nbsp; 💗 &nbsp; 🎬
-        </div>
+        <div className="about-emojis">🎶 &nbsp; 💗 &nbsp; 🎬</div>
       </section>
     </>
   );
