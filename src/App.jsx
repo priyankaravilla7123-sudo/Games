@@ -2,6 +2,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -55,6 +56,7 @@ export default function App() {
 
       <Footer onHome={() => navigateTo("home")} />
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
