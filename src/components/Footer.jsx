@@ -3,12 +3,12 @@ export default function Footer({ onHome }) {
   return (
     <footer className="site-footer">
       <button className="footer-brand" onClick={onHome}>
-        ♡ likiyao
+        ♡ LIKIYAO
       </button>
 
       <p>Play together. Laugh together. ♡</p>
 
-      <span>© 2026 likiyao</span>
+      <span>© 2026 Likiyao</span>
     </footer>
   );
 }

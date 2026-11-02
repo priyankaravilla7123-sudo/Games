@@ -1,4 +1,6 @@
+import SEO from "../components/SEO";
 import "./Home.css";
+
 const games = [
   {
     id: "antakshari",
@@ -36,8 +38,14 @@ export default function Home({ onPlayAntakshari, onPlayCharades }) {
 
   return (
     <>
+      <SEO
+        title="LIKIYAO PLAY | Free Online Antakshari & Dumb Charades"
+        description="Play Telugu Antakshari, Hindi Antakshari and Dumb Charades with friends and family. Enjoy fun online party games on LIKIYAO PLAY. Gather, Play & Laugh!"
+        path="/"
+      />
+
       <section className="hero">
-        <span className="floating-emoji emoji-one">✨</span>
+        <span className="floating-emoji emoji-one">🧸</span>
         <span className="floating-emoji emoji-two">🎀</span>
         <span className="floating-emoji emoji-three">♫</span>
         <span className="floating-emoji emoji-four">🍿</span>
@@ -81,7 +89,9 @@ export default function Home({ onPlayAntakshari, onPlayCharades }) {
       <section className="games-section" id="games">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">THE FUN STARTS HERE ✨</span>
+            <span className="eyebrow">
+              THE FUN STARTS HERE <span className="eyebrow-heart">♥</span>
+            </span>
             <h2>What are we playing?</h2>
             <p>Pick a game, gather your gang, and let the fun begin.</p>
           </div>
@@ -146,7 +156,7 @@ export default function Home({ onPlayAntakshari, onPlayCharades }) {
       <section className="about-section" id="about">
         <div className="about-heart">♡</div>
 
-        <span className="eyebrow">A LITTLE NOTE FROM likiyao</span>
+        <span className="eyebrow">A LITTLE NOTE FROM LIKIYAO</span>
 
         <h2>
           Less screen time alone
@@ -154,7 +164,7 @@ export default function Home({ onPlayAntakshari, onPlayCharades }) {
           More happy time together
         </h2>
 
-        <p>likiyao is all about connecting people through play.</p>
+        <p>Likiyao is all about connecting people through play.</p>
 
         <div className="about-emojis">🎶 &nbsp; 💗 &nbsp; 🎬</div>
       </section>

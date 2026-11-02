@@ -1,5 +1,11 @@
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 
-import { useState } from "react";
 import "./App.css";
 
 import Header from "./components/Header";
@@ -9,16 +15,16 @@ import Home from "./pages/Home";
 import Antakshari from "./pages/Antakshari";
 import DumbCharades from "./pages/DumbCharades";
 
-export default function App() {
-  const [page, setPage] = useState("home");
+function AppContent() {
+  const navigate = useNavigate();
 
-  const navigateTo = (nextPage) => {
-    setPage(nextPage);
+  const navigateTo = (path) => {
+    navigate(path);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const navigateToSection = (section) => {
-    setPage("home");
+    navigate("/");
 
     setTimeout(() => {
       if (section === "home") {
@@ -28,7 +34,7 @@ export default function App() {
           behavior: "smooth",
         });
       }
-    }, 50);
+    }, 100);
   };
 
   return (
@@ -36,23 +42,40 @@ export default function App() {
       <Header onNavigate={navigateToSection} />
 
       <main>
-        {page === "home" && (
-          <Home
-            onPlayAntakshari={() => navigateTo("antakshari")}
-            onPlayCharades={() => navigateTo("charades")}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                onPlayAntakshari={() => navigateTo("/antakshari")}
+                onPlayCharades={() => navigateTo("/dumb-charades")}
+              />
+            }
           />
-        )}
 
-        {page === "antakshari" && (
-          <Antakshari onBack={() => navigateTo("home")} />
-        )}
+          <Route
+            path="/antakshari"
+            element={<Antakshari onBack={() => navigateTo("/")} />}
+          />
 
-        {page === "charades" && (
-          <DumbCharades onBack={() => navigateTo("home")} />
-        )}
+          <Route
+            path="/dumb-charades"
+            element={<DumbCharades onBack={() => navigateTo("/")} />}
+          />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
-      <Footer onHome={() => navigateTo("home")} />
+      <Footer onHome={() => navigateTo("/")} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }

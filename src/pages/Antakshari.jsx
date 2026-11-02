@@ -1,5 +1,5 @@
-
 import { useEffect, useRef, useState } from "react";
+import SEO from "../components/SEO";
 import "./Antakshari.css";
 
 const industries = [
@@ -19,23 +19,59 @@ const industries = [
 
 const songLetters = {
   tollywood: [
-    "అ", "ఆ", "ఇ", "ఈ", "ఉ", "ఎ",
-    "క", "గ", "చ", "జ", "ట", "డ", "త", "ద",
-    "న", "ప", "బ", "మ", "య", "ర", "ల", "వ",
-    "స", "హ",
+    "అ",
+    "ఆ",
+    "ఇ",
+    "ఈ",
+    "ఉ",
+    "ఎ",
+    "క",
+    "గ",
+    "చ",
+    "జ",
+    "ట",
+    "డ",
+    "త",
+    "ద",
+    "న",
+    "ప",
+    "బ",
+    "మ",
+    "య",
+    "ర",
+    "ల",
+    "వ",
+    "స",
+    "హ",
   ],
   bollywood: [
-    "अ", "आ", "इ", "उ", "ए",
-    "क", "ग", "च", "ज", "ट", "ड", "त", "द",
-    "न", "प", "ब", "म", "य", "र", "ल", "व",
-    "स", "ह",
+    "अ",
+    "आ",
+    "इ",
+    "उ",
+    "ए",
+    "क",
+    "ग",
+    "च",
+    "ज",
+    "ट",
+    "ड",
+    "त",
+    "द",
+    "न",
+    "प",
+    "ब",
+    "म",
+    "य",
+    "र",
+    "ल",
+    "व",
+    "स",
+    "ह",
   ],
 };
 
-const heartColors = [
-  "💛", "💚", "💜", "💙",
-  "🩷", "❤️", "🧡", "🤎",
-];
+const heartColors = ["💛", "💚", "💜", "💙", "🩷", "❤️", "🧡", "🤎"];
 
 const timerOptions = [
   { label: "30 seconds", value: 0.5 },
@@ -68,21 +104,15 @@ export default function Antakshari({ onBack }) {
   const [gameFinished, setGameFinished] = useState(false);
   const [showWinnerPopup, setShowWinnerPopup] = useState(false);
 
-  const selectedIndustry = industries.find(
-    (item) => item.id === industry
-  );
+  const selectedIndustry = industries.find((item) => item.id === industry);
 
   const currentTeam = teams[activeTeamIndex];
 
   // Calculate winner
   const highestScore =
-    teams.length > 0
-      ? Math.max(...teams.map((team) => team.score))
-      : 0;
+    teams.length > 0 ? Math.max(...teams.map((team) => team.score)) : 0;
 
-  const winningTeams = teams.filter(
-    (team) => team.score === highestScore
-  );
+  const winningTeams = teams.filter((team) => team.score === highestScore);
 
   const isDraw = winningTeams.length > 1;
 
@@ -107,7 +137,7 @@ export default function Antakshari({ onBack }) {
     const remainingSeconds = seconds % 60;
 
     return `${String(minutes).padStart(2, "0")}:${String(
-      remainingSeconds
+      remainingSeconds,
     ).padStart(2, "0")}`;
   };
 
@@ -153,9 +183,7 @@ export default function Antakshari({ onBack }) {
   const deleteTeam = (id) => {
     if (teamsLocked || gameFinished) return;
 
-    setTeams((currentTeams) =>
-      currentTeams.filter((team) => team.id !== id)
-    );
+    setTeams((currentTeams) => currentTeams.filter((team) => team.id !== id));
   };
 
   // Edit team name
@@ -163,9 +191,7 @@ export default function Antakshari({ onBack }) {
     if (teamsLocked || gameFinished) return;
 
     setTeams((currentTeams) =>
-      currentTeams.map((team) =>
-        team.id === id ? { ...team, name } : team
-      )
+      currentTeams.map((team) => (team.id === id ? { ...team, name } : team)),
     );
   };
 
@@ -177,8 +203,8 @@ export default function Antakshari({ onBack }) {
 
     setTeams((currentTeams) =>
       currentTeams.map((team) =>
-        team.id === id ? { ...team, members: count } : team
-      )
+        team.id === id ? { ...team, members: count } : team,
+      ),
     );
   };
 
@@ -208,7 +234,7 @@ export default function Antakshari({ onBack }) {
       currentTeams.map((team) => ({
         ...team,
         name: team.name.trim(),
-      }))
+      })),
     );
 
     setTeamsLocked(true);
@@ -231,9 +257,7 @@ export default function Antakshari({ onBack }) {
     const availableLetters = choices.length > 0 ? choices : alphabet;
 
     const nextLetter =
-      availableLetters[
-        Math.floor(Math.random() * availableLetters.length)
-      ];
+      availableLetters[Math.floor(Math.random() * availableLetters.length)];
 
     resultSubmittedRef.current = false;
 
@@ -244,8 +268,7 @@ export default function Antakshari({ onBack }) {
     setRoundStatus("active");
   };
 
-  // Record the result at any time while the round is active,
-  // or after the timer reaches zero.
+  // Record the result
   const recordResult = (result) => {
     if (
       gameFinished ||
@@ -261,41 +284,26 @@ export default function Antakshari({ onBack }) {
     if (result === "nailed") {
       setTeams((currentTeams) =>
         currentTeams.map((team, index) =>
-          index === activeTeamIndex
-            ? { ...team, score: team.score + 1 }
-            : team
-        )
+          index === activeTeamIndex ? { ...team, score: team.score + 1 } : team,
+        ),
       );
 
-      setResultMessage(
-        `🎤 ${currentTeam.name} nailed it! +1 point`
-      );
+      setResultMessage(`🎤 ${currentTeam.name} nailed it! +1 point`);
     } else {
-      // No Point means zero points for the current team.
-      // No other team receives a point.
-      setResultMessage(
-        `❌ No point for ${currentTeam.name} this round.`
-      );
+      setResultMessage(`❌ No point for ${currentTeam.name} this round.`);
     }
 
-    // Stop the timer and finish the round immediately
     setSecondsLeft(0);
     setRoundStatus("completed");
   };
 
   // Move to the next team
   const nextRound = () => {
-    if (
-      gameFinished ||
-      roundStatus !== "completed" ||
-      teams.length < 2
-    ) {
+    if (gameFinished || roundStatus !== "completed" || teams.length < 2) {
       return;
     }
 
-    setActiveTeamIndex(
-      (currentIndex) => (currentIndex + 1) % teams.length
-    );
+    setActiveTeamIndex((currentIndex) => (currentIndex + 1) % teams.length);
 
     setLetter("");
     setSecondsLeft(0);
@@ -316,10 +324,7 @@ export default function Antakshari({ onBack }) {
       return;
     }
 
-    if (
-      roundStatus === "active" ||
-      roundStatus === "judging"
-    ) {
+    if (roundStatus === "active" || roundStatus === "judging") {
       alert("Please record the current round's result before ending the game.");
       return;
     }
@@ -349,434 +354,421 @@ export default function Antakshari({ onBack }) {
   };
 
   return (
-    <section className="language-screen setup-screen">
-      <button
-        className="back-button"
-        onClick={onBack}
-        disabled={gameFinished && showWinnerPopup}
-      >
-        ← Back to home
-      </button>
+    <>
+      <SEO
+        title="Telugu & Hindi Antakshari Game Online | LIKIYAO PLAY"
+        description="Play Telugu and Hindi Antakshari online with friends and family. Generate random song letters, create teams, set timers and enjoy a fun singing challenge on LIKIYAO PLAY."
+        path="/antakshari"
+      />
 
-      <div className="setup-card">
-        <span className="eyebrow">🎶 LET THE MUSIC BEGIN</span>
+      <section className="language-screen setup-screen">
+        <button
+          className="back-button"
+          onClick={onBack}
+          disabled={gameFinished && showWinnerPopup}
+        >
+          ← Back to home
+        </button>
 
-        <h1>Antakshari Game</h1>
+        <div className="setup-card">
+          <span className="eyebrow">🎶 LET THE MUSIC BEGIN</span>
 
-        <p className="setup-description">
-          Choose your music industry, create your teams,
-          and start singing!
-        </p>
+          <h1>Antakshari Game</h1>
 
-        {/* Step 1: Choose songs */}
-        <h2>🎬 1. Choose Your Songs</h2>
+          <p className="setup-description">
+            Choose your music industry, create your teams, and start singing!
+          </p>
 
-        <div className="industry-grid">
-          {industries.map((item) => (
+          <h2>🎬 1. Choose Your Songs</h2>
+
+          <div className="industry-grid">
+            {industries.map((item) => (
+              <button
+                key={item.id}
+                disabled={teamsLocked || round > 0 || gameFinished}
+                className={`industry-card ${
+                  industry === item.id ? "selected" : ""
+                }`}
+                onClick={() => {
+                  setIndustry(item.id);
+                  setLetter("");
+                }}
+              >
+                <span className="industry-emoji">{item.emoji}</span>
+                <strong>{item.name}</strong>
+                <span className="industry-language">{item.language}</span>
+
+                {industry === item.id && (
+                  <span className="selected-label">✓ Selected</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          <h2 className="setup-subheading">👯 2. Create Your Teams</h2>
+
+          {teams.length === 0 ? (
             <button
-              key={item.id}
-              disabled={teamsLocked || round > 0 || gameFinished}
-              className={`industry-card ${
-                industry === item.id ? "selected" : ""
-              }`}
-              onClick={() => {
-                setIndustry(item.id);
-                setLetter("");
-              }}
+              className="primary-button full-button"
+              onClick={createTeams}
             >
-              <span className="industry-emoji">{item.emoji}</span>
-              <strong>{item.name}</strong>
-              <span className="industry-language">{item.language}</span>
-
-              {industry === item.id && (
-                <span className="selected-label">✓ Selected</span>
-              )}
+              ➕ Create Teams
             </button>
-          ))}
-        </div>
+          ) : (
+            <>
+              <div className="teams-grid">
+                {teams.map((team) => (
+                  <div className="team-card" key={team.id}>
+                    <div className="team-card-top">
+                      <div className="team-icon">
+                        {heartColors[(team.id - 1) % heartColors.length]}
+                      </div>
 
-        {/* Step 2: Teams */}
-        <h2 className="setup-subheading">👯 2. Create Your Teams</h2>
-
-        {teams.length === 0 ? (
-          <button
-            className="primary-button full-button"
-            onClick={createTeams}
-          >
-            ➕ Create Teams
-          </button>
-        ) : (
-          <>
-            <div className="teams-grid">
-              {teams.map((team) => (
-                <div className="team-card" key={team.id}>
-                  <div className="team-card-top">
-                    <div className="team-icon">
-                      {heartColors[(team.id - 1) % heartColors.length]}
+                      {!teamsLocked && (
+                        <button
+                          className="delete-team-button"
+                          onClick={() => deleteTeam(team.id)}
+                          aria-label={`Delete ${team.name}`}
+                          title="Delete team"
+                        >
+                          🗑️ Delete
+                        </button>
+                      )}
                     </div>
 
-                    {!teamsLocked && (
-                      <button
-                        className="delete-team-button"
-                        onClick={() => deleteTeam(team.id)}
-                        aria-label={`Delete ${team.name}`}
-                        title="Delete team"
-                      >
-                        🗑️ Delete
-                      </button>
-                    )}
+                    <label htmlFor={`team-name-${team.id}`}>Team name</label>
+
+                    <input
+                      id={`team-name-${team.id}`}
+                      type="text"
+                      value={team.name}
+                      maxLength={30}
+                      disabled={teamsLocked || gameFinished}
+                      onChange={(event) =>
+                        updateTeamName(team.id, event.target.value)
+                      }
+                    />
+
+                    <label
+                      htmlFor={`members-${team.id}`}
+                      style={{ marginTop: 14 }}
+                    >
+                      Number of members
+                    </label>
+
+                    <input
+                      id={`members-${team.id}`}
+                      type="number"
+                      min="1"
+                      max="50"
+                      value={team.members}
+                      disabled={teamsLocked || gameFinished}
+                      onChange={(event) =>
+                        updateMembers(team.id, event.target.value)
+                      }
+                    />
+
+                    <span className="member-caption">
+                      👤 {team.members} player(s)
+                    </span>
                   </div>
+                ))}
+              </div>
 
-                  <label htmlFor={`team-name-${team.id}`}>
-                    Team name
-                  </label>
+              {!teamsLocked && teams.length < 8 && (
+                <button
+                  className="secondary-button"
+                  onClick={addTeam}
+                  disabled={gameFinished}
+                >
+                  ➕ Add Another Team
+                </button>
+              )}
 
-                  <input
-                    id={`team-name-${team.id}`}
-                    type="text"
-                    value={team.name}
-                    maxLength={30}
-                    disabled={teamsLocked || gameFinished}
-                    onChange={(event) =>
-                      updateTeamName(team.id, event.target.value)
-                    }
-                  />
-
-                  <label
-                    htmlFor={`members-${team.id}`}
-                    style={{ marginTop: 14 }}
-                  >
-                    Number of members
-                  </label>
-
-                  <input
-                    id={`members-${team.id}`}
-                    type="number"
-                    min="1"
-                    max="50"
-                    value={team.members}
-                    disabled={teamsLocked || gameFinished}
-                    onChange={(event) =>
-                      updateMembers(team.id, event.target.value)
-                    }
-                  />
-
-                  <span className="member-caption">
-                    👤 {team.members} player(s)
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {!teamsLocked && teams.length < 8 && (
               <button
-                className="secondary-button"
-                onClick={addTeam}
+                className={`lock-teams-button ${teamsLocked ? "locked" : ""}`}
+                onClick={toggleTeamsLock}
                 disabled={gameFinished}
               >
-                ➕ Add Another Team
+                {teamsLocked
+                  ? "🔒 Teams Locked — Unlock to Edit"
+                  : "Confirm & Lock Teams"}
               </button>
-            )}
 
-            <button
-              className={`lock-teams-button ${
-                teamsLocked ? "locked" : ""
-              }`}
-              onClick={toggleTeamsLock}
-              disabled={gameFinished}
-            >
-              {teamsLocked
-                ? "🔒 Teams Locked — Unlock to Edit"
-                : "Confirm & Lock Teams"}
-            </button>
-
-            {teamsLocked && (
-              <p className="teams-locked-message">
-                🎉 Teams confirmed! Your teams are ready to play.
-              </p>
-            )}
-          </>
-        )}
-
-        {/* Step 3: Timer */}
-        <div className="timer-section">
-          <h2>⏱️ 3. Choose the Round Timer</h2>
-
-          <p className="setup-description">
-            Select how long each team has to sing.
-            The timer starts when you generate a letter.
-          </p>
-
-          <div className="timer-controls">
-            <select
-              id="timer-duration"
-              value={timerMinutes}
-              disabled={gameFinished || roundStatus === "active"}
-              onChange={(event) =>
-                setTimerMinutes(Number(event.target.value))
-              }
-            >
-              {timerOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Step 4: Letter and gameplay */}
-        <div className="letter-section">
-          <h2>🔤 4. Generate a Random Letter</h2>
-
-          <p className="setup-description">
-            Sing a {selectedIndustry.language} song beginning
-            with the displayed letter.
-          </p>
-
-          {currentTeam && (
-            <div className="current-team-banner">
-              🎤 Current turn: <strong>{currentTeam.name}</strong>
-            </div>
-          )}
-
-          <div className="letter-display">
-            <span className={letter ? "letter" : "letter-placeholder"}>
-              {letter || "?"}
-            </span>
-
-            <span className="letter-caption">
-              {letter
-                ? `Round ${round} · ${selectedIndustry.name}`
-                : "Your letter will appear here"}
-            </span>
-          </div>
-
-          <div
-            className={`countdown-display ${
-              secondsLeft <= 10 && roundStatus === "active"
-                ? "timer-warning"
-                : ""
-            }`}
-          >
-            <span>
-              {roundStatus === "judging"
-                ? "⏰ Time's up!"
-                : roundStatus === "completed"
-                ? "✅ Round completed"
-                : roundStatus === "ready"
-                ? "⏳ Ready to play "
-                : "⏳ Time remaining "}
-            </span>
-
-            <strong>{formatTime(secondsLeft)}</strong>
-          </div>
-
-          <button
-            className="primary-button full-button"
-            onClick={generateLetter}
-            disabled={
-              gameFinished ||
-              !teamsLocked ||
-              roundStatus !== "ready" ||
-              teams.length < 2
-            }
-          >
-            🔀 Generate Letter & Start Timer
-          </button>
-
-          {!teamsLocked && (
-            <p className="game-hint">
-              Create and lock your teams before starting.
-            </p>
-          )}
-
-          {/* Both result buttons appear immediately after a letter
-              is generated and remain visible when the timer expires. */}
-          {(roundStatus === "active" ||
-            roundStatus === "judging") &&
-            currentTeam && (
-              <div className="round-actions">
-                <h3>
-                  {roundStatus === "active"
-                    ? "🎤 Make Your Call!"
-                    : "⏰ Time's Up! Decide the Result"}
-                </h3>
-
-                <p>
-                  Can <strong>{currentTeam.name}</strong> sing a
-                  song starting with <strong>{letter}</strong>?
+              {teamsLocked && (
+                <p className="teams-locked-message">
+                  🎉 Teams confirmed! Your teams are ready to play.
                 </p>
+              )}
+            </>
+          )}
 
-                <div className="result-buttons">
-                  <button
-                    type="button"
-                    className="result-button nailed-button"
-                    onClick={() => recordResult("nailed")}
-                  >
-                    <span>🎤 Nailed It!</span>
-                    <small>
-                      Valid song · +1 point to {currentTeam.name}
-                    </small>
-                  </button>
+          <div className="timer-section">
+            <h2>⏱️ 3. Choose the Round Timer</h2>
 
-                  <button
-                    type="button"
-                    className="result-button pass-button"
-                    onClick={() => recordResult("no-point")}
-                  >
-                    <span>❌ No Point!</span>
-                    <small>
-                      No points awarded to {currentTeam.name}
-                    </small>
-                  </button>
-                </div>
+            <p className="setup-description">
+              Select how long each team has to sing. The timer starts when you
+              generate a letter.
+            </p>
 
-                {roundStatus === "active" && (
-                  <p className="game-hint">
-                    Choose the result before the timer runs out.
-                  </p>
-                )}
+            <div className="timer-controls">
+              <select
+                id="timer-duration"
+                value={timerMinutes}
+                disabled={gameFinished || roundStatus === "active"}
+                onChange={(event) =>
+                  setTimerMinutes(Number(event.target.value))
+                }
+              >
+                {timerOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="letter-section">
+            <h2>🔤 4. Generate a Random Letter</h2>
+
+            <p className="setup-description">
+              Sing a {selectedIndustry.language} song beginning with the
+              displayed letter.
+            </p>
+
+            {currentTeam && (
+              <div className="current-team-banner">
+                🎤 Current turn: <strong>{currentTeam.name}</strong>
               </div>
             )}
 
-          {/* Completed round */}
-          {roundStatus === "completed" && round > 0 && (
-            <div className="round-completed">
-              <h3>🎉 Round Finished!</h3>
-              <p>{resultMessage}</p>
+            <div className="letter-display">
+              <span className={letter ? "letter" : "letter-placeholder"}>
+                {letter || "?"}
+              </span>
 
-              <button
-                className="primary-button full-button"
-                onClick={nextRound}
-                disabled={gameFinished}
-              >
-                ➡️ Next Team's Turn
-              </button>
+              <span className="letter-caption">
+                {letter
+                  ? `Round ${round} · ${selectedIndustry.name}`
+                  : "Your letter will appear here"}
+              </span>
             </div>
-          )}
-        </div>
 
-        {/* Step 5: Scoreboard */}
-        <div className="score-section">
-          <h2>🏆 5. Team Scoreboard</h2>
-
-          {teams.length === 0 ? (
-            <p className="setup-description">
-              Create teams to see the scoreboard.
-            </p>
-          ) : (
-            <div className="scoreboard">
-              {teams.map((team) => (
-                <div className="score-card" key={team.id}>
-                  <div className="score-card-icon">🏆</div>
-                  <h3>{team.name}</h3>
-                  <p className="score-points">
-                    {team.score} {team.score === 1 ? "Point" : "Points"}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {teams.length >= 2 && (
-            <button
-              type="button"
-              className="finish-game-button"
-              onClick={finishGame}
-              disabled={gameFinished}
+            <div
+              className={`countdown-display ${
+                secondsLeft <= 10 && roundStatus === "active"
+                  ? "timer-warning"
+                  : ""
+              }`}
             >
-              🏆 Finish the Game
+              <span>
+                {roundStatus === "judging"
+                  ? "⏰ Time's up!"
+                  : roundStatus === "completed"
+                    ? "✅ Round completed"
+                    : roundStatus === "ready"
+                      ? "⏳ Ready to play "
+                      : "⏳ Time remaining "}
+              </span>
+
+              <strong>{formatTime(secondsLeft)}</strong>
+            </div>
+
+            <button
+              className="primary-button full-button"
+              onClick={generateLetter}
+              disabled={
+                gameFinished ||
+                !teamsLocked ||
+                roundStatus !== "ready" ||
+                teams.length < 2
+              }
+            >
+              🔀 Generate Letter & Start Timer
             </button>
-          )}
 
-          {gameFinished && (
-            <p className="teams-locked-message">
-              🏁 Game finished! Final scores are locked.
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Winner celebration popup */}
-      {showWinnerPopup && (
-        <div
-          className="winner-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="winner-title"
-        >
-          <div className="winner-popup">
-            <div className="winner-confetti">🎉 🎊 🎉</div>
-            <div className="winner-trophy">🏆</div>
-
-            {isDraw ? (
-              <>
-                <h2 id="winner-title">It's a Tie!</h2>
-                <p className="winner-message">
-                  Amazing game! The teams are tied.
-                </p>
-
-                <div className="winner-names">
-                  {winningTeams.map((team) => (
-                    <div className="winner-name" key={team.id}>
-                      <span>🏆 {team.name}</span>
-                      <strong>{team.score} points</strong>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="winner-message">
-                  🎉 THE SPOTLIGHT IS YOURS! 🎉
-                </p>
-
-                <h2 id="winner-title" className="winner-team-name">
-                  🥳 {winningTeams[0]?.name} 🥳
-                </h2>
-
-                <p className="winner-final-score">
-                  {highestScore}{" "}
-                  {highestScore === 1 ? "Point" : "Points"}
-                </p>
-
-                <p className="winner-message">
-                  The music stars have been crowned! 🎤✨
-                </p>
-              </>
+            {!teamsLocked && (
+              <p className="game-hint">
+                Create and lock your teams before starting.
+              </p>
             )}
 
-            <div className="final-scores">
-              <h3>🏅 Final Scoreboard</h3>
+            {(roundStatus === "active" || roundStatus === "judging") &&
+              currentTeam && (
+                <div className="round-actions">
+                  <h3>
+                    {roundStatus === "active"
+                      ? "🎤 Make Your Call!"
+                      : "⏰ Time's Up! Decide the Result"}
+                  </h3>
 
-              {[...teams]
-                .sort((a, b) => b.score - a.score)
-                .map((team) => (
-                  <div className="final-score-row" key={team.id}>
-                    <span>
-                      {team.score === highestScore ? "🏆 " : "😔 "}
-                      {team.name}
-                    </span>
+                  <p>
+                    Can <strong>{currentTeam.name}</strong> sing a song starting
+                    with <strong>{letter}</strong>?
+                  </p>
 
-                    <strong>
-                      {team.score}{" "}
-                      {team.score === 1 ? "point" : "points"}
-                    </strong>
+                  <div className="result-buttons">
+                    <button
+                      type="button"
+                      className="result-button nailed-button"
+                      onClick={() => recordResult("nailed")}
+                    >
+                      <span>🎤 Nailed It!</span>
+                      <small>Valid song · +1 point to {currentTeam.name}</small>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="result-button pass-button"
+                      onClick={() => recordResult("no-point")}
+                    >
+                      <span>❌ No Point!</span>
+                      <small>No points awarded to {currentTeam.name}</small>
+                    </button>
+                  </div>
+
+                  {roundStatus === "active" && (
+                    <p className="game-hint">
+                      Choose the result before the timer runs out.
+                    </p>
+                  )}
+                </div>
+              )}
+
+            {roundStatus === "completed" && round > 0 && (
+              <div className="round-completed">
+                <h3>🎉 Round Finished!</h3>
+                <p>{resultMessage}</p>
+
+                <button
+                  className="primary-button full-button"
+                  onClick={nextRound}
+                  disabled={gameFinished}
+                >
+                  ➡️ Next Team's Turn
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="score-section">
+            <h2>🏆 5. Team Scoreboard</h2>
+
+            {teams.length === 0 ? (
+              <p className="setup-description">
+                Create teams to see the scoreboard.
+              </p>
+            ) : (
+              <div className="scoreboard">
+                {teams.map((team) => (
+                  <div className="score-card" key={team.id}>
+                    <div className="score-card-icon">🏆</div>
+                    <h3>{team.name}</h3>
+                    <p className="score-points">
+                      {team.score} {team.score === 1 ? "Point" : "Points"}
+                    </p>
                   </div>
                 ))}
-            </div>
+              </div>
+            )}
 
-            <button
-              type="button"
-              className="restart-game-button"
-              onClick={restartGame}
-            >
-              Close & Restart Game
-            </button>
+            {teams.length >= 2 && (
+              <button
+                type="button"
+                className="finish-game-button"
+                onClick={finishGame}
+                disabled={gameFinished}
+              >
+                🏆 Finish the Game
+              </button>
+            )}
+
+            {gameFinished && (
+              <p className="teams-locked-message">
+                🏁 Game finished! Final scores are locked.
+              </p>
+            )}
           </div>
         </div>
-      )}
-    </section>
+
+        {showWinnerPopup && (
+          <div
+            className="winner-overlay"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="winner-title"
+          >
+            <div className="winner-popup">
+              <div className="winner-confetti">🎉 🎊 🎉</div>
+              <div className="winner-trophy">🏆</div>
+
+              {isDraw ? (
+                <>
+                  <h2 id="winner-title">It's a Tie!</h2>
+                  <p className="winner-message">
+                    Amazing game! The teams are tied.
+                  </p>
+
+                  <div className="winner-names">
+                    {winningTeams.map((team) => (
+                      <div className="winner-name" key={team.id}>
+                        <span>🏆 {team.name}</span>
+                        <strong>{team.score} points</strong>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="winner-message">
+                    🎉 THE SPOTLIGHT IS YOURS! 🎉
+                  </p>
+
+                  <h2 id="winner-title" className="winner-team-name">
+                    🥳 {winningTeams[0]?.name} 🥳
+                  </h2>
+
+                  <p className="winner-final-score">
+                    {highestScore} {highestScore === 1 ? "Point" : "Points"}
+                  </p>
+
+                  <p className="winner-message">
+                    The music stars have been crowned! 🎤✨
+                  </p>
+                </>
+              )}
+
+              <div className="final-scores">
+                <h3>🏅 Final Scoreboard</h3>
+
+                {[...teams]
+                  .sort((a, b) => b.score - a.score)
+                  .map((team) => (
+                    <div className="final-score-row" key={team.id}>
+                      <span>
+                        {team.score === highestScore ? "🏆 " : "😔 "}
+                        {team.name}
+                      </span>
+
+                      <strong>
+                        {team.score} {team.score === 1 ? "point" : "points"}
+                      </strong>
+                    </div>
+                  ))}
+              </div>
+
+              <button
+                type="button"
+                className="restart-game-button"
+                onClick={restartGame}
+              >
+                Close & Restart Game
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+    </>
   );
 }
