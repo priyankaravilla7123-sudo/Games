@@ -5,6 +5,7 @@ import {
   Navigate,
   useNavigate,
 } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import "./App.css";
 
@@ -68,6 +69,7 @@ function AppContent() {
       </main>
 
       <Footer onHome={() => navigateTo("/")} />
+      <SpeedInsights />
     </div>
   );
 }
